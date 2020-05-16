@@ -7,5 +7,6 @@ app.use(express.json());
 app.post('/updatedImages', async (req, res) => {
   let images = req.body.data.split(',');
   console.log(images);
+  res.sendStatus(200);
 });
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
