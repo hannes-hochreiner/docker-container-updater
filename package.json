@@ -1,0 +1,32 @@
+{
+  "name": "docker-container-updater",
+  "version": "1.0.0",
+  "description": "Listens for web hook messages to trigger updates of docker container",
+  "main": "bld/index.js",
+  "scripts": {
+    "build": "[ -d ./bld ] && rm -r ./bld; babel src -d bld",
+    "build_test": "[ -d ./bld_test ] && rm -r ./bld_test; babel src_test -d bld_test",
+    "test": "npm run build; npm run build_test; jasmine --config=./jasmine.config.json",
+    "start": "npm run build; node bld/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hannes-hochreiner/docker-container-updater.git"
+  },
+  "author": "Hannes Hochreiner <hannes@hochreiner.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hannes-hochreiner/docker-container-updater/issues"
+  },
+  "homepage": "https://github.com/hannes-hochreiner/docker-container-updater#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "jasmine": "^3.5.0"
+  }
+}
