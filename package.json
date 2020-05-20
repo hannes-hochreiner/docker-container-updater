@@ -21,6 +21,7 @@
   "homepage": "https://github.com/hannes-hochreiner/docker-container-updater#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "docker-composter": "^1.2.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
