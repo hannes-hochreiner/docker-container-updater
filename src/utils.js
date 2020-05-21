@@ -53,7 +53,7 @@ export async function removeContainer(request, containerName) {
     url: '/containers/json',
     params: {all: true}
   })).data;
-  const container = containers.find(cont => cont.Names.includes(containerName));
+  const container = containers.find(cont => cont.Names.includes(`/${containerName}`));
   
   if (typeof container == 'undefined') {
     console.log(`container "${containerName}" does not exist`);
