@@ -3,7 +3,7 @@ import {default as path} from 'path';
 import {default as express} from 'express';
 import {default as axios} from 'axios';
 import {Docker, Composter} from 'docker-composter';
-import {getComposterData, getUpdateData, pullImage, removeContainer} from './utils';
+import {getComposterData, getUpdateData, pullImage, removeContainer, removeDanglingImages} from './utils';
 
 const app = express();
 const port = process.env.PORT || 8888;
@@ -40,8 +40,9 @@ async function update(updatedImages) {
       console.log(`recreate containers from "${composterFile}"`);
       await composter.up(composterData[composterFile]);
     }
-  
+
     // remove dangling images
+    await removeDanglingImages(request);
   } catch (error) {
     console.log(error);
   }

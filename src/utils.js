@@ -39,6 +39,14 @@ export function getUpdateData(updatedImages, composterData) {
   return {imagesToBeUpdated: Object.keys(imagesToBeUpdated), containersToBeUpdated};
 }
 
+export function removeDanglingImages(request) {
+  return request({
+    method: 'post',
+    url: '/images/prune',
+    params: {filters: {dangling: [true]}}
+  });
+}
+
 export function pullImage(request, imageName) {
   return request({
     method: 'post',
