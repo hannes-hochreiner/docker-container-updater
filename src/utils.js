@@ -43,7 +43,7 @@ export function removeDanglingImages(request) {
   return request({
     method: 'post',
     url: '/images/prune',
-    params: {filters: {dangling: [true]}}
+    params: {filters: {dangling: true}}
   });
 }
 
