@@ -13,7 +13,7 @@ app.post('/updatedImages', async (req, res) => {
   let images = req.body.data.split(',');
   console.log(images);
 
-  update(images);
+  setTimeout(update, 500, images);
 
   res.sendStatus(200);
 });
@@ -38,4 +38,6 @@ async function update(updatedImages) {
     console.log(`recreate containers from "${composterFile}"`);
     await composter.up(composterData[composterFile]);
   }
+
+  // remove dangling images
 }
