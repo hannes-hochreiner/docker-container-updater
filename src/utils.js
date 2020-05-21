@@ -39,11 +39,11 @@ export function getUpdateData(updatedImages, composterData) {
   return {imagesToBeUpdated: Object.keys(imagesToBeUpdated), containersToBeUpdated};
 }
 
-export function removeDanglingImages(request) {
+export function removeUnusedImages(request) {
   return request({
     method: 'post',
     url: '/images/prune',
-    params: {filters: JSON.stringify({dangling: ["true"]})}
+    params: {filters: JSON.stringify({dangling: ["false"]})}
   });
 }
 

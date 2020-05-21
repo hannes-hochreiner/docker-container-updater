@@ -3,7 +3,7 @@ import {default as path} from 'path';
 import {default as express} from 'express';
 import {default as axios} from 'axios';
 import {Docker, Composter} from 'docker-composter';
-import {getComposterData, getUpdateData, pullImage, removeContainer, removeDanglingImages} from './utils';
+import {getComposterData, getUpdateData, pullImage, removeContainer, removeUnusedImages} from './utils';
 
 const app = express();
 const port = process.env.PORT || 8888;
@@ -42,7 +42,7 @@ async function update(updatedImages) {
     }
 
     // remove dangling images
-    await removeDanglingImages(request);
+    await removeUnusedImages(request);
   } catch (error) {
     console.log(error);
   }
