@@ -48,13 +48,16 @@ export function pullImage(request, imageName) {
 }
 
 export async function removeContainer(request, containerName) {
-  const container = (await request({
+  const containers = (await request({
     method: 'get',
     url: '/containers/json',
     params: {all: true}
-  })).data.find(cont => cont.Names.includes(containerName));
+  })).data;
+  const container = containers.find(cont => cont.Names.includes(containerName));
   
   if (typeof container == 'undefined') {
+    console.log(`container "${containerName}" does not exist`);
+    console.log(containers.map(elem => elem.Names));
     return;
   }
 
@@ -72,6 +75,7 @@ export async function removeContainer(request, containerName) {
       method: 'post',
       url: `/containers/${container.Id}/wait`
     });
+    console.log(`container "${containerName}" was stopped`);
   }
 
   await request({
@@ -83,6 +87,7 @@ export async function removeContainer(request, containerName) {
     url: `/containers/${container.Id}/wait`,
     params: {condition: 'removed'}
   });
+  console.log(`container "${containerName}" was deleted`);
 }
 
 function getDirectoryContents(fs, path) {
