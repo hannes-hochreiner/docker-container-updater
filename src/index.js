@@ -3,7 +3,7 @@ import {default as path} from 'path';
 import {default as express} from 'express';
 import {default as axios} from 'axios';
 import {Docker, Composter} from 'docker-composter';
-import {getComposterData, getUpdateData} from './utils';
+import {getComposterData, getUpdateData, pullImage, removeContainer} from './utils';
 
 const app = express();
 const port = process.env.PORT || 8888;
@@ -13,7 +13,7 @@ app.post('/updatedImages', async (req, res) => {
   let images = req.body.data.split(',');
   console.log(images);
 
-  setTimeout(update, 500, images);
+  update(images);
 
   res.sendStatus(200);
 });
@@ -21,6 +21,7 @@ app.listen(port, () => console.log(`Example app listening at http://localhost:${
 
 async function update(updatedImages) {
   const composterData = await getComposterData(fs, path, process.env.BASE_PATH);
+  console.log('obtained composter data');
   const {imagesToBeUpdated, containersToBeUpdated} = getUpdateData(updatedImages, composterData);
   const request = axios.create({
     socketPath: '/var/run/docker.sock'
