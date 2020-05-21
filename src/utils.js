@@ -82,11 +82,17 @@ export async function removeContainer(request, containerName) {
     method: 'delete',
     url: `/containers/${container.Id}`
   });
-  await request({
-    method: 'post',
-    url: `/containers/${container.Id}/wait`,
-    params: {condition: 'removed'}
-  });
+  try {
+    await request({
+      method: 'post',
+      url: `/containers/${container.Id}/wait`,
+      params: {condition: 'removed'}
+    });
+  } catch (error) {
+    if (error.response.status !== 404) {
+      throw error;
+    }
+  }
   console.log(`container "${containerName}" was deleted`);
 }
 
